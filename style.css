@@ -47,16 +47,33 @@ section { animation: fadeInUp 0.9s ease-out both; }
    где-то декоративный элемент вылезет за границу секции. */
 html, body { overflow-x: hidden; }
 
-/* Все декоративные "коллажные" фото с отрицательными отступами
-   при желании не должны заезжать за экран на маленьких ширинах —
-   секции уже стоят с overflow:hidden, но дополнительно прячем
-   декор, который на узких экранах накладывается на текст. */
+/* Декоративные "коллажные" фото на десктопе стоят внахлёст поверх
+   контента (это и есть задумка). На узких экранах для такого нет
+   места, поэтому переводим их в обычный поток страницы — фото
+   остаются видны (это наши совместные фото, их нельзя прятать),
+   просто идут отдельным блоком по центру, без наложений. */
 @media (max-width: 900px) {
-  .deco-photo-lineup { display: none !important; }
+  .deco-photo-lineup {
+    position: static !important;
+    display: block !important;
+    width: 62% !important;
+    max-width: 220px;
+    margin: 18px auto !important;
+    transform: none !important;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.32) !important;
+  }
 }
 @media (max-width: 768px) {
-  .deco-photo-venue { display: none !important; }
-  .deco-photo-dress { display: none !important; }
+  .deco-photo-venue,
+  .deco-photo-dress {
+    position: static !important;
+    display: block !important;
+    width: 62% !important;
+    max-width: 220px;
+    margin: 18px auto !important;
+    transform: none !important;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.32) !important;
+  }
 }
 
 /* Карточка дресс-кода была фиксированной ширины 420px — на узких
