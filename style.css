@@ -29,3 +29,83 @@ img { max-width: 100%; }
 }
 
 section { animation: fadeInUp 0.9s ease-out both; }
+
+/* ============================================================
+   Адаптивность (мобильные/планшеты/десктоп)
+   Правила ниже только подстраивают размеры/расположение под
+   узкие экраны — дизайн, цвета, шрифты, тексты и фото не меняются.
+   ============================================================ */
+
+/* Первый экран: используем dvh, чтобы мобильные браузеры с
+   выезжающей адрес-строкой не обрезали и не растягивали постер. */
+@supports (height: 100dvh) {
+  .hero-section { min-height: 100dvh !important; }
+  .hero-img { height: 100dvh !important; }
+}
+
+/* Убираем горизонтальную прокрутку в любом случае, даже если
+   где-то декоративный элемент вылезет за границу секции. */
+html, body { overflow-x: hidden; }
+
+/* Все декоративные "коллажные" фото с отрицательными отступами
+   при желании не должны заезжать за экран на маленьких ширинах —
+   секции уже стоят с overflow:hidden, но дополнительно прячем
+   декор, который на узких экранах накладывается на текст. */
+@media (max-width: 900px) {
+  .deco-photo-lineup { display: none !important; }
+}
+@media (max-width: 768px) {
+  .deco-photo-venue { display: none !important; }
+  .deco-photo-dress { display: none !important; }
+}
+
+/* Карточка дресс-кода была фиксированной ширины 420px — на узких
+   экранах это обрезало цветовые образцы. Делаем её резиновой. */
+@media (max-width: 600px) {
+  .dress-card {
+    width: 100% !important;
+    aspect-ratio: auto !important;
+    height: auto !important;
+  }
+}
+
+/* Меньше отступов и не такие гигантские заголовки/декор на телефонах и планшетах */
+@media (max-width: 768px) {
+  section:not(.hero-section) { padding: 64px 20px 74px !important; }
+  h2 { letter-spacing: 4px !important; }
+  .deco-watermark { font-size: 46px !important; }
+  .story-card { padding: 34px 26px !important; }
+  .calendar-img { height: 340px !important; }
+  .dress-swatches { gap: 16px !important; }
+}
+@media (max-width: 480px) {
+  section:not(.hero-section) { padding: 44px 16px 52px !important; }
+  h2 { letter-spacing: 2.5px !important; }
+  .deco-watermark { font-size: 28px !important; }
+  .story-card { padding: 26px 20px !important; }
+  .calendar-img { height: 220px !important; }
+  .dress-swatches { gap: 12px !important; }
+  .dress-card { padding: 24px 18px !important; }
+}
+
+/* Строки программы (Line Up) — на мобильных времени/звёздочке
+   тесно рядом с текстом, переносим текст на новую строку. */
+@media (max-width: 480px) {
+  .lineup-row { flex-wrap: wrap !important; justify-content: space-between !important; row-gap: 8px !important; padding: 16px 18px !important; }
+  .lineup-time { font-size: 22px !important; }
+  .lineup-text { flex: 1 1 auto !important; font-size: 15px !important; order: 3; flex-basis: 100% !important; }
+}
+
+/* Плавные анимации — упрощаем/отключаем там, где они мешают или
+   на устройствах, которые просят меньше движения. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+@media (max-width: 480px) {
+  section { animation-duration: 0.5s !important; }
+}
